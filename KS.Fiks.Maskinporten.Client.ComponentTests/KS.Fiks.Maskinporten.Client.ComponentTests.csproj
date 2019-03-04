@@ -11,7 +11,7 @@
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.6.0" />
-        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="*" />
+        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="0.0.4.1-dev0090" />
         <PackageReference Include="KS.Fiks.QA" Version="0.9.9-dev-50" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
         <PackageReference Include="xunit" Version="2.4.0" />
