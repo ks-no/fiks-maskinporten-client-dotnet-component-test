@@ -9,17 +9,15 @@ using Xunit;
 
 namespace KS.Fiks.Maskinporten.Client.ComponentTests
 {
-    public class MaskinportenClientComponentTests
+    public class MaskinportenClientComponentTests : IDisposable
     {
         private readonly MaskinportenClientFixture _fixture;
-
 
         public MaskinportenClientComponentTests()
         {
             _fixture = new MaskinportenClientFixture();
         }
 
-        
         [Fact]
         public void CanBeCreated()
         {
@@ -33,64 +31,64 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             await Assert.ThrowsAsync<UnexpectedResponseException>(async () =>
             {
                 var sut = _fixture.WithUnauthorizedCertificate().CreateSut();
-                var token = await sut.GetAccessToken("ks");
-            });
-        }
-        
-        [Fact]
-        public async Task GetsTokenIfCertificationIsValid()
-        {
-            if (!_fixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-            
-            var sut = _fixture.CreateSut();
-            var token = await sut.GetAccessToken("ks");
-            token.Should().BeOfType<MaskinportenToken>();
-        }
-        
-        [Fact]
-        public async Task GetsTheSameTokenIfCallingTwiceInShortTime()
-        {
-            if (!_fixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-            
-            var sut = _fixture.CreateSut();
-            var token1 = await sut.GetAccessToken("ks");
-            var token2 = await sut.GetAccessToken("ks");
-            token1.Should().Be(token2);
-        }
-        
-        [Fact]
-        public async Task GetsNewTokenIfNumberOfSecondsLeftBeforeExpireIsLargerThanExp()
-        {
-            if (!_fixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-            
-            var sut = _fixture.WithAHighNumberOfSecondsLeftBeforeExpire().CreateSut();
-            var token1 = await sut.GetAccessToken("ks");
-            
-            var token2 = await sut.GetAccessToken("ks");
-            token1.Should().NotBe(token2);
+                var token = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
 
         [Fact]
-        public async Task TokenIsValidatedAtIdPorten()
+        public async Task GetsTokenIfCertificationIsValid()
         {
-            if (!_fixture.CanRunTestWithProperCredentials())
+            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
             {
                 return;
             }
-            
+
             var sut = _fixture.CreateSut();
-            var token = await sut.GetAccessToken("ks");
-            var response = await _fixture.ValidateTokenWithIdPorten(token);
-            response.StatusCode.Should().Be(HttpStatusCode.OK);
+            var token = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            token.Should().BeOfType<MaskinportenToken>();
+        }
+
+        [Fact]
+        public async Task GetsTheSameTokenIfCallingTwiceInShortTime()
+        {
+            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
+            {
+                return;
+            }
+
+            var sut = _fixture.CreateSut();
+            var token1 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            var token2 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            token1.Should().Be(token2);
+        }
+
+        [Fact]
+        public async Task GetsNewTokenIfNumberOfSecondsLeftBeforeExpireIsLargerThanExp()
+        {
+            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
+            {
+                return;
+            }
+
+            var sut = _fixture.WithAHighNumberOfSecondsLeftBeforeExpire().CreateSut();
+            var token1 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+
+            var token2 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            token1.Should().NotBe(token2);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposed)
+        {
+            if (disposed)
+            {
+                _fixture.Dispose();
+            }
         }
     }
 }

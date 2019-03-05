@@ -7,12 +7,8 @@ using Ks.Fiks.Maskinporten.Client;
 
 namespace KS.Fiks.Maskinporten.Client.ComponentTests
 {
-    public class MaskinportenClientFixture
+    public class MaskinportenClientFixture : IDisposable
     {
-        private readonly MaskinportenClientProperties _properties;
-
-        private X509Certificate2 _certificate;
-
         private const string MaskinportenValidateEndpoint =
             "https://oidc-ver2.difi.no/idporten-oidc-provider/tokeninfo";
 
@@ -25,6 +21,9 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
         private const string MaskinportenIssuer = @"oidc_ks_test";
         private const int MaskinportenNumberOfSecondsLeftBeforeExpire = 10;
 
+        private readonly MaskinportenClientProperties _properties;
+        private X509Certificate2 _certificate;
+
         public MaskinportenClientFixture()
         {
             if (CanRunTestWithProperCredentials())
@@ -33,12 +32,22 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             }
             else
             {
-                _certificate = new X509Certificate2("alice-virksomhetssertifikat.p12",
+                _certificate = new X509Certificate2(
+                    "alice-virksomhetssertifikat.p12",
                     "PASSWORD");
             }
 
-            _properties = new MaskinportenClientProperties(MaskinportenAudience, MaskinportenTokenEndpoint,
-                MaskinportenIssuer, MaskinportenNumberOfSecondsLeftBeforeExpire);
+            _properties = new MaskinportenClientProperties(
+                MaskinportenAudience,
+                MaskinportenTokenEndpoint,
+                MaskinportenIssuer,
+                MaskinportenNumberOfSecondsLeftBeforeExpire);
+        }
+
+        // This is needed until a proper way to inject credentials on the server is found
+        public static bool CanRunTestWithProperCredentials()
+        {
+            return IdPortenCertFile.Length > 0;
         }
 
         public MaskinportenClient CreateSut()
@@ -48,7 +57,8 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 
         public MaskinportenClientFixture WithUnauthorizedCertificate()
         {
-            _certificate = new X509Certificate2("alice-virksomhetssertifikat.p12",
+            _certificate = new X509Certificate2(
+                "alice-virksomhetssertifikat.p12",
                 "PASSWORD");
             return this;
         }
@@ -59,23 +69,19 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             return this;
         }
 
-        public async Task<HttpResponseMessage> ValidateTokenWithIdPorten(MaskinportenToken token)
+
+        public void Dispose()
         {
-            var httpClient = new HttpClient();
-            var content = new FormUrlEncodedContent(new List<KeyValuePair<string, string>>
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposed)
+        {
+            if (disposed)
             {
-                new KeyValuePair<string, string>("token", token.JwtId)
-            });
-
-            return await httpClient.PostAsync(MaskinportenValidateEndpoint, content);
+                _certificate.Dispose();
+            }
         }
-
-        // This is needed until a proper way to inject credentials on the server is found
-        public bool CanRunTestWithProperCredentials()
-        {
-            return IdPortenCertFile.Length > 0;
-        }
-        
     }
 }
-
