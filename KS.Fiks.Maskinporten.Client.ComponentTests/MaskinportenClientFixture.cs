@@ -10,7 +10,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
     public class MaskinportenClientFixture : IDisposable
     {
         private const string MaskinportenValidateEndpoint =
-            "https://oidc-ver2.difi.no/idporten-oidc-provider/tokeninfo";
 
         private const string IdPortenCertFile = ""; // Insert path to certificate to run locally
 
@@ -19,9 +18,9 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
         private const string MaskinportenTokenEndpoint = @"https://oidc-ver2.difi.no/idporten-oidc-provider/token";
         private const string MaskinportenAudience = @"https://oidc-ver2.difi.no/idporten-oidc-provider/";
         private const string MaskinportenIssuer = @"oidc_ks_test";
-        private const int MaskinportenNumberOfSecondsLeftBeforeExpire = 10;
+        private int _numberOfSecondsLeftBeforeExpire = 10;
 
-        private readonly MaskinportenClientProperties _properties;
+        private MaskinportenClientConfiguration _configuration;
         private X509Certificate2 _certificate;
 
         public MaskinportenClientFixture()
@@ -36,12 +35,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
                     "alice-virksomhetssertifikat.p12",
                     "PASSWORD");
             }
-
-            _properties = new MaskinportenClientProperties(
-                MaskinportenAudience,
-                MaskinportenTokenEndpoint,
-                MaskinportenIssuer,
-                MaskinportenNumberOfSecondsLeftBeforeExpire);
         }
 
         // This is needed until a proper way to inject credentials on the server is found
@@ -52,7 +45,15 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 
         public MaskinportenClient CreateSut()
         {
-            return new MaskinportenClient(_certificate, _properties);
+            _configuration = new MaskinportenClientConfiguration
+            {
+                Audience = MaskinportenAudience,
+                TokenEndpoint = MaskinportenTokenEndpoint,
+                Issuer = MaskinportenIssuer,
+                NumberOfSecondsLeftBeforeExpire = _numberOfSecondsLeftBeforeExpire,
+                Certificate = _certificate
+            };
+            return new MaskinportenClient(_configuration);
         }
 
         public MaskinportenClientFixture WithUnauthorizedCertificate()
@@ -65,7 +66,7 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 
         public MaskinportenClientFixture WithAHighNumberOfSecondsLeftBeforeExpire()
         {
-            _properties.NumberOfSecondsLeftBeforeExpire = 1000000;
+            _numberOfSecondsLeftBeforeExpire = 1000000;
             return this;
         }
 
