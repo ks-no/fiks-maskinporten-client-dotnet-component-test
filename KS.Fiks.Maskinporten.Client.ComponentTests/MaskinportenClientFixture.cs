@@ -9,8 +9,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 {
     public class MaskinportenClientFixture : IDisposable
     {
-        private const string MaskinportenValidateEndpoint =
-
         private const string IdPortenCertFile = ""; // Insert path to certificate to run locally
 
         private const string IdPortenCertPass = ""; // Insert credentials to run locally
