@@ -43,14 +43,12 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 
         public MaskinportenClient CreateSut()
         {
-            _configuration = new MaskinportenClientConfiguration
-            {
-                Audience = MaskinportenAudience,
-                TokenEndpoint = MaskinportenTokenEndpoint,
-                Issuer = MaskinportenIssuer,
-                NumberOfSecondsLeftBeforeExpire = _numberOfSecondsLeftBeforeExpire,
-                Certificate = _certificate
-            };
+            _configuration = new MaskinportenClientConfiguration(
+                MaskinportenAudience,
+                MaskinportenTokenEndpoint,
+                MaskinportenIssuer,
+                _numberOfSecondsLeftBeforeExpire,
+                _certificate);
             return new MaskinportenClient(_configuration);
         }
 
