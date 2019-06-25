@@ -31,7 +31,7 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             await Assert.ThrowsAsync<UnexpectedResponseException>(async () =>
             {
                 var sut = _fixture.WithUnauthorizedCertificate().CreateSut();
-                var token = await sut.GetAccessToken("ks").ConfigureAwait(false);
+                var token = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             }).ConfigureAwait(false);
         }
 
@@ -44,7 +44,7 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             }
 
             var sut = _fixture.CreateSut();
-            var token = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            var token = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             token.Should().BeOfType<MaskinportenToken>();
         }
 
@@ -57,8 +57,8 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             }
 
             var sut = _fixture.CreateSut();
-            var token1 = await sut.GetAccessToken("ks").ConfigureAwait(false);
-            var token2 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            var token1 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
+            var token2 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             token1.Should().Be(token2);
         }
 
@@ -71,9 +71,9 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
             }
 
             var sut = _fixture.WithAHighNumberOfSecondsLeftBeforeExpire().CreateSut();
-            var token1 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            var token1 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
 
-            var token2 = await sut.GetAccessToken("ks").ConfigureAwait(false);
+            var token2 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             token1.Should().NotBe(token2);
         }
 
