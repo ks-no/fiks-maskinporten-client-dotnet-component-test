@@ -9,9 +9,9 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
 {
     public class MaskinportenClientFixture : IDisposable
     {
-        private const string IdPortenCertFile = "secret-auth.p12"; // Insert path to certificate to run locally
+        private const string IdPortenCertFile = ""; // Insert path to certificate to run locally
 
-        private const string IdPortenCertPass = "SE4mGw2z"; // Insert credentials to run locally
+        private const string IdPortenCertPass = ""; // Insert credentials to run locally
 
         private const string MaskinportenTokenEndpoint = @"https://oidc-ver2.difi.no/idporten-oidc-provider/token";
         private const string MaskinportenAudience = @"https://oidc-ver2.difi.no/idporten-oidc-provider/";
