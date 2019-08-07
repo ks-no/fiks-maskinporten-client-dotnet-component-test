@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Maskinporten.Client.ComponentTests", "KS.Fiks.Maskinporten.Client.ComponentTests\KS.Fiks.Maskinporten.Client.ComponentTests.csproj", "{83C3FAE4-79F4-4EF0-8AAC-F63AE96A82F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KS.Fiks.Maskinporten.Client.IntegrationTests", "KS.Fiks.Maskinporten.Client.IntegrationTests\KS.Fiks.Maskinporten.Client.IntegrationTests.csproj", "{83C3FAE4-79F4-4EF0-8AAC-F63AE96A82F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

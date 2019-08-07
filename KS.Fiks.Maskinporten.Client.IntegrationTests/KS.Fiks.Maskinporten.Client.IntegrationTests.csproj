@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netcoreapp2.2</TargetFramework>
@@ -6,13 +6,13 @@
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
 
-        <RootNamespace>KS.Fiks.Maskinporten.Client.ComponentTests</RootNamespace>
+        <RootNamespace>KS.Fiks.Maskinporten.Client.IntegrationTests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="5.6.0" />
-        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="0.0.6-build.20190506145602587" />
-        <PackageReference Include="KS.Fiks.QA" Version="0.9.9-dev-58" PrivateAssets="All" />
+        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="1.0.0" />
+        <PackageReference Include="KS.Fiks.QA" Version="1.0.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
         <PackageReference Include="xunit" Version="2.4.1" />
         <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />

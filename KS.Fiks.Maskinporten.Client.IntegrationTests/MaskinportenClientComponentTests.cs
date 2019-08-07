@@ -7,7 +7,7 @@ using Ks.Fiks.Maskinporten.Client;
 using Newtonsoft.Json;
 using Xunit;
 
-namespace KS.Fiks.Maskinporten.Client.ComponentTests
+namespace KS.Fiks.Maskinporten.Client.IntegrationTests
 {
     public class MaskinportenClientComponentTests : IDisposable
     {
@@ -38,11 +38,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
         [Fact]
         public async Task GetsTokenIfCertificationIsValid()
         {
-            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-
             var sut = _fixture.CreateSut();
             var token = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             token.Should().BeOfType<MaskinportenToken>();
@@ -51,11 +46,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
         [Fact]
         public async Task GetsTheSameTokenIfCallingTwiceInShortTime()
         {
-            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-
             var sut = _fixture.CreateSut();
             var token1 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
             var token2 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
@@ -65,11 +55,6 @@ namespace KS.Fiks.Maskinporten.Client.ComponentTests
         [Fact]
         public async Task GetsNewTokenIfNumberOfSecondsLeftBeforeExpireIsLargerThanExp()
         {
-            if (!MaskinportenClientFixture.CanRunTestWithProperCredentials())
-            {
-                return;
-            }
-
             var sut = _fixture.WithAHighNumberOfSecondsLeftBeforeExpire().CreateSut();
             var token1 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
 
