@@ -10,11 +10,11 @@ namespace KS.Fiks.Maskinporten.Client.IntegrationTests
 
         public string IdPortenCertPass => "${MASKINPORTEN_CERT_PWD}"; // Swapped with password in jenkins pipeline
 
-        public string MaskinportenTokenEndpoint => @"https://oidc-ver2.difi.no/idporten-oidc-provider/token";
+        public string MaskinportenTokenEndpoint => @"https://ver2.maskinporten.no/token";
 
-        public string MaskinportenAudience => @"https://oidc-ver2.difi.no/idporten-oidc-provider/";
+        public string MaskinportenAudience => @"https://ver2.maskinporten.no/";
 
-        public string MaskinportenIssuer => @"oidc_ks_test";
+        public string MaskinportenIssuer => @"77c0a0ba-d20d-424c-b5dd-f1c63da07fc4";
 
         public int MaskinportenNumberOfSecondsLeftBeforeExpire => 10;
 
