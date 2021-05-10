@@ -14,7 +14,7 @@ namespace KS.Fiks.Maskinporten.Client.IntegrationTests
 
         public string MaskinportenAudience => @"https://oidc-ver2.difi.no/idporten-oidc-provider/";
 
-        public string MaskinportenIssuer => @"oidc_ks_test";
+        public string MaskinportenIssuer => @"77c0a0ba-d20d-424c-b5dd-f1c63da07fc4";
 
         public int MaskinportenNumberOfSecondsLeftBeforeExpire => 10;
 
