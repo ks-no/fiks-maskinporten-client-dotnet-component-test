@@ -1,10 +1,7 @@
 using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Ks.Fiks.Maskinporten.Client;
-using Newtonsoft.Json;
 using Xunit;
 
 namespace KS.Fiks.Maskinporten.Client.IntegrationTests
