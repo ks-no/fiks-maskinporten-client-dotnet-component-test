@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Ks.Fiks.Maskinporten.Client;
+using Ks.Fiks.Maskinporten.Client.Errors;
 using Xunit;
 
 namespace KS.Fiks.Maskinporten.Client.IntegrationTests
