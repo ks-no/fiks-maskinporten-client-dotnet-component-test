@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
@@ -9,11 +8,13 @@
         <RootNamespace>KS.Fiks.Maskinporten.Client.IntegrationTests</RootNamespace>
 
         <OutputType>Library</OutputType>
+
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
         <PackageReference Include="FluentAssertions" Version="6.12.0" />
-        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="1.1.8" />
+        <PackageReference Include="KS.Fiks.Maskinporten.Client" Version="1.1.9-alpha.main.20" />
         <PackageReference Include="KS.Fiks.QA" Version="1.0.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
         <PackageReference Include="xunit" Version="2.6.1" />
