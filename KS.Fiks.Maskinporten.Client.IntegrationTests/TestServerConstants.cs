@@ -1,3 +1,6 @@
+using System;
+using System.Configuration;
+
 namespace KS.Fiks.Maskinporten.Client.IntegrationTests
 {
     public class TestServerConstants : ITestEnvironmentConstants
@@ -6,13 +9,14 @@ namespace KS.Fiks.Maskinporten.Client.IntegrationTests
 
         public int Port => 443;
 
-        public string IdPortenCertFile => "secret-auth.p12"; // Insert path to certificate to run locally
+        public string IdPortenCertFile => "secret-auth.p12";
 
-        public string IdPortenCertPass => "${MASKINPORTEN_CERT_PWD}"; // Swapped with password in jenkins pipeline
+        public string IdPortenCertPass => Environment.GetEnvironmentVariable("MASKINPORTEN_CERT_PWD")
+                                          ?? throw new ConfigurationErrorsException("MASKINPORTEN_CERT_PWD environment variable not set");
 
-        public string MaskinportenTokenEndpoint => @"https://ver2.maskinporten.no/token";
+        public string MaskinportenTokenEndpoint => @"https://test.maskinporten.no/token";
 
-        public string MaskinportenAudience => @"https://ver2.maskinporten.no/";
+        public string MaskinportenAudience => @"https://test.maskinporten.no/";
 
         public string MaskinportenIssuer => @"77c0a0ba-d20d-424c-b5dd-f1c63da07fc4";
 
