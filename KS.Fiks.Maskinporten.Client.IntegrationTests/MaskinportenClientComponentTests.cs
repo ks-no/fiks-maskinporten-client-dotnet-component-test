@@ -73,8 +73,8 @@ public sealed class MaskinportenClientComponentTests : IDisposable
         var jwtToken = handler.ReadJwtToken(maskinportenToken.Token);
         var pidFromToken = jwtToken.Payload["pid"] as string;
 
-        pidFromToken.Should().NotBeNull();
-        pidFromToken.Should().Be("12345678901");
+        pidFromToken.Should().BeNull(); // Should fail now
+        // pidFromToken.Should().Be("12345678901");
     }
 
     public void Dispose()
