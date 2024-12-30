@@ -59,6 +59,8 @@ public sealed class MaskinportenClientComponentTests : IDisposable
     [Fact]
     public async Task GetsTokenWithPidWhenRequested()
     {
+        Assert.True(1 == 2);
+
         var sut = _fixture.CreateSut();
         var tokenRequest = new TokenRequestBuilder()
             .WithScopes("ks:fiks")
@@ -73,8 +75,8 @@ public sealed class MaskinportenClientComponentTests : IDisposable
         var jwtToken = handler.ReadJwtToken(maskinportenToken.Token);
         var pidFromToken = jwtToken.Payload["pid"] as string;
 
-        pidFromToken.Should().BeNull(); // Should fail now
-        // pidFromToken.Should().Be("12345678901");
+        pidFromToken.Should().NotBeNull();
+        pidFromToken.Should().Be("12345678901");
     }
 
     public void Dispose()
