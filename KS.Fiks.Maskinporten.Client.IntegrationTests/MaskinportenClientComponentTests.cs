@@ -1,7 +1,9 @@
 using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Ks.Fiks.Maskinporten.Client;
+using KS.Fiks.Maskinporten.Client.Builder;
 using Xunit;
 
 namespace KS.Fiks.Maskinporten.Client.IntegrationTests;
@@ -52,6 +54,27 @@ public sealed class MaskinportenClientComponentTests : IDisposable
 
         var token2 = await sut.GetAccessToken(_fixture.DefaultScope).ConfigureAwait(false);
         token1.Should().NotBe(token2);
+    }
+
+    [Fact]
+    public async Task GetsTokenWithPidWhenRequested()
+    {
+        var sut = _fixture.CreateSut();
+        var tokenRequest = new TokenRequestBuilder()
+            .WithScopes("ks:fiks")
+            .WithPid("12345678901")
+            .Build();
+
+        var maskinportenToken = await sut.GetAccessToken(tokenRequest).ConfigureAwait(false);
+
+        maskinportenToken.Should().BeOfType<MaskinportenToken>();
+
+        var handler = new JwtSecurityTokenHandler();
+        var jwtToken = handler.ReadJwtToken(maskinportenToken.Token);
+        var pidFromToken = jwtToken.Payload["pid"] as string;
+
+        pidFromToken.Should().NotBeNull();
+        pidFromToken.Should().Be("12345678901");
     }
 
     public void Dispose()
