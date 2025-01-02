@@ -59,8 +59,6 @@ public sealed class MaskinportenClientComponentTests : IDisposable
     [Fact]
     public async Task GetsTokenWithPidWhenRequested()
     {
-        Assert.True(1 == 2);
-
         var sut = _fixture.CreateSut();
         var tokenRequest = new TokenRequestBuilder()
             .WithScopes("ks:fiks")
