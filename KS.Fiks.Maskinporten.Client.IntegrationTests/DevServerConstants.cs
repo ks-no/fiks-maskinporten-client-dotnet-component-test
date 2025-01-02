@@ -5,7 +5,8 @@ namespace KS.Fiks.Maskinporten.Client.IntegrationTests;
 
 public class DevServerConstants : ITestEnvironmentConstants
 {
-    public string IdPortenCertFile => "secret-auth.p12";
+    public string IdPortenCertFile => Environment.GetEnvironmentVariable("MASKINPORTEN_CERT")
+                                      ?? throw new ConfigurationErrorsException("MASKINPORTEN_CERT_PWD environment variable not set");
 
     public string IdPortenCertPass => Environment.GetEnvironmentVariable("MASKINPORTEN_CERT_PWD")
                                       ?? throw new ConfigurationErrorsException("MASKINPORTEN_CERT_PWD environment variable not set");
