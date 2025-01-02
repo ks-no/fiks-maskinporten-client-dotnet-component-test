@@ -62,7 +62,7 @@ public sealed class MaskinportenClientComponentTests : IDisposable
         var sut = _fixture.CreateSut();
         var tokenRequest = new TokenRequestBuilder()
             .WithScopes("ks:fiks")
-            .WithPid("12345678901")
+            .WithPid("16032826532")
             .Build();
 
         var maskinportenToken = await sut.GetAccessToken(tokenRequest).ConfigureAwait(false);
@@ -74,7 +74,7 @@ public sealed class MaskinportenClientComponentTests : IDisposable
         var pidFromToken = jwtToken.Payload["pid"] as string;
 
         pidFromToken.Should().NotBeNull();
-        pidFromToken.Should().Be("12345678901");
+        pidFromToken.Should().Be("16032826532");
     }
 
     public void Dispose()
