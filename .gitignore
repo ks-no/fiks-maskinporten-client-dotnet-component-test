@@ -37,3 +37,6 @@ msbuild.wrn
 
 # Secret certificate file
 secret-auth.p12
+
+# Test results
+*.trx
