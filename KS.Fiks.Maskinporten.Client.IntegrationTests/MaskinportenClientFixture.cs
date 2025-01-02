@@ -15,7 +15,10 @@ public sealed class MaskinportenClientFixture : IDisposable
     public MaskinportenClientFixture()
     {
         _testEnvironmentConstants = new DevServerConstants();
-        _certificate = new X509Certificate2(_testEnvironmentConstants.IdPortenCertFile, _testEnvironmentConstants.IdPortenCertPass);
+        _certificate = new X509Certificate2(
+            _testEnvironmentConstants.IdPortenCertFile,
+            _testEnvironmentConstants.IdPortenCertPass,
+            X509KeyStorageFlags.EphemeralKeySet);
         _numberOfSecondsLeftBeforeExpire = _testEnvironmentConstants.MaskinportenNumberOfSecondsLeftBeforeExpire;
     }
 
